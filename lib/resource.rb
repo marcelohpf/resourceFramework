@@ -6,5 +6,5 @@ class ResourceModel
   property :id, Serial
   property :name, String
   property :product_number, String
-  property :created_at, DateTime
+  timestamps :created_at, :updated_on
 end

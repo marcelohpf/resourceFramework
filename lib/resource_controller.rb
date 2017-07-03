@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'json'
 require_relative 'resource'
+require_relative 'class_type_error'
 
 
 class ResourceBaseApp < Sinatra::Base
@@ -33,6 +34,7 @@ class ResourceBaseApp < Sinatra::Base
 
   before do
     content_type :json
+    raise ClassTypeError unless @@resource <= ResourceModel
   end
 
   get '/api/resources/' do

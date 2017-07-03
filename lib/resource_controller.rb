@@ -1,9 +1,11 @@
 require 'sinatra/base'
-require './lib/resource'
 require 'json'
+require_relative 'resource'
 
 
-class ResourceApp < Sinatra::Base
+class ResourceBaseApp < Sinatra::Base
+
+  @@resource = ResourceModel
 
   ## The resource module for Allocation framework
   # this class should handle te requests for basics operations
@@ -16,7 +18,7 @@ class ResourceApp < Sinatra::Base
   # Examples of use:
   #
   # Create:
-  # curl -X POST http://localhost:9292/api/resources/ -d '{"name": "coisa", "product_number": "feffex21"}' -H 'Content-type: application/json'
+  # curl -X POST http://localhost:9292/api/resources/ -d '{"name": "coisa", "product_number": "feffex21", "date_acquisition": "2017-07-03"}' -H 'Content-type: application/json'
   #
   # Read:
   # curl -X GET http://localhost:9292/api/resources/
@@ -34,12 +36,12 @@ class ResourceApp < Sinatra::Base
   end
 
   get '/api/resources/' do
-    [200, ResourceModel.all.to_json]
+    [200, @@resource.all.to_json]
   end
 
   get '/api/resources/:id' do |id|
     begin
-      resource = ResourceModel.get(Integer(id))
+      resource = @@resource.get(Integer(id))
       unless resource.nil?
         [200, resource.to_json]
       else
@@ -52,7 +54,7 @@ class ResourceApp < Sinatra::Base
 
   post '/api/resources/' do
     data = JSON.load(request.body.read)
-    resource = ResourceModel.new(data)
+    resource = @@resource.new(data)
     if resource.valid?
       resource.save
       [201, 'Resource created']
@@ -62,7 +64,7 @@ class ResourceApp < Sinatra::Base
   end
   post '/api/resources/:id' do |id|
     data = JSON.load(request.body.read)
-    resource = ResourceModel.get(Integer(id))
+    resource = @@resource.get(Integer(id))
     if resource.update(data)
       [200, resource.to_json]
     else
@@ -71,7 +73,7 @@ class ResourceApp < Sinatra::Base
   end
 
   delete '/api/resources/:id' do |id|
-    resource = ResourceModel.get(Integer(id))
+    resource = @@resource.get(Integer(id))
     unless resource.nil?
       resource.destroy!
       [200, 'Record deleted']

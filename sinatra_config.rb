@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'data_mapper'
 
 set :show_exceptions, false
 set :dump_errors, false

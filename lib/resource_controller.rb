@@ -47,7 +47,7 @@ class ResourceBaseApp < Sinatra::Base
       unless resource.nil?
         [200, resource.to_json]
       else
-        [204, "Record not found"]
+        [204, "Resource not found"]
       end
     rescue
       [403, "Bad format id, must be an integer"]
@@ -78,7 +78,7 @@ class ResourceBaseApp < Sinatra::Base
     resource = @@resource.get(Integer(id))
     unless resource.nil?
       resource.destroy!
-      [200, 'Record deleted']
+      [200, 'Resource deleted']
     else
       [404, 'Record not found']
     end

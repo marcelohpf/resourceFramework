@@ -1,0 +1,10 @@
+require 'data_mapper'
+
+class UserModel
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :name, String
+  property :register, String
+  timestamps :created_at, :updated_on
+end

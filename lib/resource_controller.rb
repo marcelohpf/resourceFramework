@@ -1,14 +1,17 @@
 require 'sinatra/base'
-require 'json'
 require_relative 'resource'
+require_relative 'resources_base'
 require_relative 'class_type_error'
 
 
 class ResourceBaseApp < Sinatra::Base
+  include ResourcesBase
 
-  @@resource = ResourceModel
+  def model
+    ResourceModel
+  end
 
-  ## The resource module for Allocation framework
+  ## The role module for Allocation framework
   # this class should handle te requests for basics operations
   # of CRUD (Create, Read, Update, Delete), and include a L of list elements
   #
@@ -19,68 +22,41 @@ class ResourceBaseApp < Sinatra::Base
   # Examples of use:
   #
   # Create:
-  # curl -X POST http://localhost:9292/api/resources/ -d '{"name": "coisa", "product_number": "feffex21", "date_acquisition": "2017-07-03"}' -H 'Content-type: application/json'
+	# curl -X POST http://localhost:9292/api/resources/ -d '{"name": "Papel"    , "product_number": "ff2feef3"}' -H     'Content-type: application/json'
   #
   # Read:
   # curl -X GET http://localhost:9292/api/resources/
   # curl -X GET http://localhost:9292/api/resources/1
   #
   # Update:
-  # curl -X POST http://localhost:9292/api/resources/8 -d '{"name": "coisa", "product_number": "000000"}' -H 'Content-type: application/json'
+	# curl -X POST http://localhost:9292/api/resources/1 -d '{"name": "PapelNovo", "product_number": "ff2feef3"}' -H 'Content-type: application/json'
   #
   # Delete:
-  # curl -X DELETE http://localhost:9292/api/resources/8
+  # curl -X DELETE http://localhost:9292/api/resources/1
 
 
   before do
     content_type :json
-    raise ClassTypeError unless @@resource <= ResourceModel
+    raise ClassTypeError unless model() <= ResourceModel
   end
 
   get '/api/resources/' do
-    [200, @@resource.all.to_json]
+    list
   end
 
   get '/api/resources/:id' do |id|
-    begin
-      resource = @@resource.get(Integer(id))
-      unless resource.nil?
-        [200, resource.to_json]
-      else
-        [204, "Resource not found"]
-      end
-    rescue
-      [403, "Bad format id, must be an integer"]
-    end
+    retrieve(id)
   end
 
   post '/api/resources/' do
-    data = JSON.load(request.body.read)
-    resource = @@resource.new(data)
-    if resource.valid?
-      resource.save
-      [201, 'Resource created']
-    else
-      [403, 'Bad format in data send']
-    end
+    create(request)
   end
+
   post '/api/resources/:id' do |id|
-    data = JSON.load(request.body.read)
-    resource = @@resource.get(Integer(id))
-    if resource.update(data)
-      [200, resource.to_json]
-    else
-      [404, "Record not found"]
-    end
+    update(id, request)
   end
 
   delete '/api/resources/:id' do |id|
-    resource = @@resource.get(Integer(id))
-    unless resource.nil?
-      resource.destroy!
-      [200, 'Resource deleted']
-    else
-      [404, 'Record not found']
-    end
+    delete(id)
   end
 end

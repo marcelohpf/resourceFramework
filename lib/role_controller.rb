@@ -1,12 +1,15 @@
 require 'sinatra/base'
-require 'json'
 require_relative 'role'
+require_relative 'resources_base'
 require_relative 'class_type_error'
 
 
 class RoleBaseApp < Sinatra::Base
+  include ResourcesBase
 
-  @@role = RoleModel
+  def model
+    RoleModel
+  end
 
   ## The role module for Allocation framework
   # this class should handle te requests for basics operations
@@ -19,7 +22,7 @@ class RoleBaseApp < Sinatra::Base
   # Examples of use:
   #
   # Create:
-	# curl -X POST http://localhost:9292/api/roles/ -d '{"name": "Papel"    , "description": "Descricao do papel", "group": "1"}' -H     'Content-type: application/json'
+	# curl -X POST http://localhost:9292/api/roles/ -d '{"name": "Papel", "description": "Descricao do papel", "group": "1"}' -H 'Content-type: application/json'
   #
   # Read:
   # curl -X GET http://localhost:9292/api/roles/
@@ -34,53 +37,26 @@ class RoleBaseApp < Sinatra::Base
 
   before do
     content_type :json
-    raise ClassTypeError unless @@role <= RoleModel
+    raise ClassTypeError unless model() <= RoleModel
   end
 
   get '/api/roles/' do
-    [200, @@role.all.to_json]
+    list
   end
 
   get '/api/roles/:id' do |id|
-    begin
-      role = @@role.get(Integer(id))
-      unless role.nil?
-        [200, role.to_json]
-      else
-        [204, "Record not found"]
-      end
-    rescue
-      [403, "Bad format id, must be an integer"]
-    end
+    retrieve(id)
   end
 
   post '/api/roles/' do
-    data = JSON.load(request.body.read)
-    role = @@role.new(data)
-    if role.valid?
-      role.save
-      [201, 'Role created']
-    else
-      [403, 'Bad format in data send']
-    end
+    create(request)
   end
+
   post '/api/roles/:id' do |id|
-    data = JSON.load(request.body.read)
-    role = @@role.get(Integer(id))
-    if role.update(data)
-      [200, role.to_json]
-    else
-      [404, "Record not found"]
-    end
+    update(id, request)
   end
 
   delete '/api/roles/:id' do |id|
-    role = @@role.get(Integer(id))
-    unless role.nil?
-      role.destroy!
-      [200, 'Record deleted']
-    else
-      [404, 'Record not found']
-    end
+    delete(id)
   end
 end

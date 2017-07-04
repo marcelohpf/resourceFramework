@@ -1,12 +1,15 @@
 require 'sinatra/base'
-require 'json'
 require_relative 'user'
 require_relative 'class_type_error'
+require_relative 'resources_base'
 
 
 class UserBaseApp < Sinatra::Base
+  include ResourcesBase
 
-  @@user = UserModel
+  def model
+    UserModel
+  end
 
   ## The user module for Allocation framework
   # this class should handle te requests for basics operations
@@ -34,53 +37,27 @@ class UserBaseApp < Sinatra::Base
 
   before do
     content_type :json
-    raise ClassTypeError unless @@user <= UserModel
+    raise ClassTypeError unless model <= UserModel
   end
 
   get '/api/users/' do
-    [200, @@user.all.to_json]
+    list
   end
 
   get '/api/users/:id' do |id|
-    begin
-      user = @@user.get(Integer(id))
-      unless user.nil?
-        [200, user.to_json]
-      else
-        [204, "User not found"]
-      end
-    rescue
-      [403, "Bad format id, must be an integer"]
-    end
+    retrieve(id)
   end
 
   post '/api/users/' do
-    data = JSON.load(request.body.read)
-    user = @@user.new(data)
-    if user.valid?
-      user.save
-      [201, 'User created']
-    else
-      [403, 'Bad format in data send']
-    end
+    create(request)
   end
+
   post '/api/users/:id' do |id|
-    data = JSON.load(request.body.read)
-    user = @@user.get(Integer(id))
-    if user.update(data)
-      [200, user.to_json]
-    else
-      [404, "Record not found"]
-    end
+    update(id, request)
   end
 
   delete '/api/users/:id' do |id|
-    user = @@user.get(Integer(id))
-    unless user.nil?
-      user.destroy!
-      [200, 'User deleted']
-    else
-      [404, 'Record not found']
-    end
+    delete(id)
   end
+
 end

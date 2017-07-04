@@ -15,4 +15,5 @@ require './data_mapper'
 # use MyController
 # run App
 # reference: https://learn.co/lessons/sinatra-multiple-controllers
+use RoleBaseApp
 run ResourceApp

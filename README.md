@@ -76,6 +76,8 @@ As rotas padrão para o sistema são apresentadas na tabela abaixo
 |---------|----|-------|
 |GET|/api/resources/:id| Dados de um item |
 |GET|/api/resources/| Lista de itens a serem reservados |
+|GET|/api/resources/:id/roles| Lista com id e nome das roles de um recurso |
+|POST|/api/resources/:id/roles | Adiciona os roles a um resource |
 |POST|/api/resources/:id| Edita os dados de um item |
 |POST|/api/resources/| Adiciona um novo item |
 |DELETE|/api/resources/:id| Deleta um recurso |

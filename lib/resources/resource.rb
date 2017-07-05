@@ -10,4 +10,5 @@ class ResourceModel
   property :type, Discriminator
 
 	has n, :allocation_models
+	has n, :role_models, through: Resource
 end

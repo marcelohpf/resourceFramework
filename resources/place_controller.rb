@@ -30,4 +30,11 @@ class PlaceApp < ResourceBaseApp
     delete(id)
   end
 
+	post '/api/places/:id/roles' do |id|
+		add_resources_roles(id, request)
+	end
+
+	get '/api/places/:id/roles' do |id|
+		resources_roles(id)
+  end
 end

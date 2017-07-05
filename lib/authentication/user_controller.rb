@@ -22,7 +22,7 @@ class UserBaseApp < Sinatra::Base
   # Examples of use:
   #
   # Create:
-  # curl -X POST http://localhost:9292/api/users/ -d '{"name": "coisa", "register": "111111"}' -H 'Content-type: application/json'
+  # curl -X POST http://localhost:9292/api/users/ -d '{"name": "coisa", "register": "111111", "role_model_id": 1}' -H 'Content-type: application/json'
   #
   # Read:
   # curl -X GET http://localhost:9292/api/users/

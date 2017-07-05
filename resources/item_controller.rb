@@ -30,4 +30,12 @@ class ItemApp < ResourceBaseApp
     delete(id)
   end
 
+	post '/api/items/:id/roles' do |id|
+		add_resources_roles(id, request)
+	end
+
+	get '/api/items/:id/roles' do |id|
+		resources_roles(id)
+  end
+
 end

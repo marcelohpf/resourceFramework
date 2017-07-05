@@ -143,12 +143,28 @@ Os atributos básicos das modelos são:
 Caso não seja fornecida uma classe derivada da esperada (ex. ModelUser para uma UserApp) será lançada uma exceção.
 
 
-### Personalizando
+### Explicação
 
-Segue abaixo o diagrama referente as models do framework.
+Com a utilização do [Sinatra](http://www.sinatrarb.com/) os métodos de **get**, **post**, **put** e **delete** foram implementados. [DataMapper](http://datamapper.org/) foi usado para configurar a persistência de dados.
 
-![models](images/models1.png)
+Na classe [Administrator](https://github.com/dasGrupo2/resourceFramework/blob/devel/users/administrator.rb) é definido os atributos extras de acordo com o contexto, os outros atibrutos do framework são definidos neste **hot spot** [UserModel](https://github.com/dasGrupo2/resourceFramework/blob/devel/lib/authentication/user.rb), e a relação deste módulo com o resto do framework é feita de acordo com as definições do **frozen spot** [base](https://github.com/dasGrupo2/resourceFramework/tree/devel/lib/base).
 
-Segue abaixo o diagrama referente as controllers do framework.
+Além disso os componentes referentes ao papel do usuário [Role](https://github.com/dasGrupo2/resourceFramework/blob/devel/lib/authentication/role.rb), são também **frozen spots**, pois de acordo com o papel do usuário suas permissões são implementadas.
 
-![controllers](images/controllers1.png)
+O Sinatra e o DataMapper são usados nas controllers e models para receber as requisições e implementar as persistências.
+
+### Diagramas
+
+A descrição acima pode ser notada também por meio dos diagramas abaixo. Para melhor compreensão o framework foi dividido em 3 driagramas, **models**, **controllers** e **implementations**, neles estão todas as classes e comportamentos e relacionamentos do framework.
+
+#### Models
+
+![models](images/models.png)
+
+#### Controllers
+
+![controllers](images/controllers.png)
+
+#### Implementations
+
+![implementations](images/implementationss.png)

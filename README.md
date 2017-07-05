@@ -126,3 +126,15 @@ Os atributos básicos das modelos são:
 
 É necessário sobreescrever a variável que armazena qual model estará sendo utilizada pela controladora `@@user`. Assim, todos os demais métodos da API REST serão utilizado adequadamente.
 Caso não seja fornecida uma classe derivada da esperada (ex. ModelUser para uma UserApp) será lançada uma exceção.
+
+
+### Personalizando
+
+Segue abaixo o diagrama referente as models do framework.
+
+![models](images/models1.png)
+
+Segue abaixo o diagrama referente as controllers do framework.
+
+![controllers](images/controllers1.png)
+

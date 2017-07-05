@@ -1,12 +1,15 @@
 require 'sinatra/base'
-require_relative '../resources/resource'
-require_relative '../authentication/user'
+require_relative 'allocation'
 require_relative '../base/resources_base'
 require_relative '../base/class_type_error'
 
 
 class AllocationBaseApp < Sinatra::Base
   include ResourcesBase
+	
+	def model
+		AllocationModel
+	end
 
   ## The allocation module for Allocation framework
   # this class should handle te requests for basics operations
@@ -19,7 +22,7 @@ class AllocationBaseApp < Sinatra::Base
   # Examples of use:
   #
   # Create:
-	# curl -X POST http://localhost:9292/api/allocations/ -d '{"name": "Papel", "description": "Descricao do papel", "group": "1"}' -H 'Content-type: application/json'
+	# curl -X POST http://localhost:9292/api/allocations/ -d '{"id_user": "1", "id_resource": "1", "description": "Descricao da alocação"}'
   #
   # Read:
   # curl -X GET http://localhost:9292/api/allocations/

@@ -5,57 +5,44 @@ require_relative '../base/class_type_error'
 
 
 class AllocationBaseApp < Sinatra::Base
-	
+
 	def model
 		AllocationModel
 	end
 
-  ## The allocation module for Allocation framework
-  # this class should handle te requests for basics operations
-  # of CRUD (Create, Read, Update, Delete), and include a L of list elements
-  #
-  # To use the methods of this class only is necessary set in the header of
-  # requisition the Content-type: application/json in allocations
-  # that upload some data
-  #
-  # Examples of use:
-  #
-  # Create:
-	# curl -X POST http://localhost:9292/api/allocations/ -d '{"id_user": "1", "id_resource": "1", "description": "Descricao da alocação"}'
-  #
-  # Read:
-  # curl -X GET http://localhost:9292/api/allocations/
-  # curl -X GET http://localhost:9292/api/allocations/1
-  #
-  # Update:
-	# curl -X POST http://localhost:9292/api/allocations/1 -d '{"name": "PapelNovo", "description": "Descricao nova", "group": "2"}' -H 'Content-type: application/json'
-  #
-  # Delete:
-  # curl -X DELETE http://localhost:9292/api/allocations/1
-
-
   before do
     content_type :json
-    raise ClassTypeError unless model() <= AllocationModel
   end
 
   get '/api/allocations/' do
-    list
+    [200, AllocationModel.all.to_json]
   end
 
-  get '/api/allocations/:id' do |id|
-    retrieve(id)
+  get '/api/allocations/user/:id' do |id|
+    [200, AllocationModel.all(user_model_id: id).to_json]
+  end
+
+	get '/api/allocations/resource/:id' do |id|
+    [200, AllocationModel.all(resource_model_id: id).to_json]
+  end
+
+	get '/api/allocations/:id' do |id|
+    [200, AllocationModel.get(id).to_json ]
   end
 
   post '/api/allocations/' do
-    create(request)
-  end
-
-  post '/api/allocations/:id' do |id|
-    update(id, request)
+		data = JSON.load(request.body.read)
+		allocation = AllocationModel.new(data)
+		if allocation.valid?
+			allocation.save
+			[201, 'Resource created']
+		else
+			[403, 'Bad format in data send']
+		end
   end
 
   delete '/api/allocations/:id' do |id|
-    delete(id)
+		AllocationModel.get(id).destroy!
+    [202, "Record Delete"]
   end
 end

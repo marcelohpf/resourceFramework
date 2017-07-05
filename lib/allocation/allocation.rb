@@ -1,10 +1,11 @@
 require 'data_mapper'
 
-class AllocationModel 
-  include DataMapper::Resource 
+class AllocationModel
+  include DataMapper::Resource
 
   property :id, Serial
-  property :description, String 
+  property :start, DateTime
+  property :end, DateTime 
   timestamps :created_at, :updated_on
 
 	belongs_to :user_model

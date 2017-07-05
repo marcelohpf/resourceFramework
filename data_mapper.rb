@@ -11,4 +11,4 @@ require_all File.expand_path "#{__dir__}/lib"
 require_all File.expand_path "#{__dir__}/resources"
 
 DataMapper.finalize
-DataMapper.repository.auto_migrate!
+DataMapper.repository.auto_upgrade!

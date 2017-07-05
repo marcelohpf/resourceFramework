@@ -7,4 +7,6 @@ class UserModel
   property :name, String
   property :register, String
   timestamps :created_at, :updated_on
+
+	has n, :allocation_models
 end

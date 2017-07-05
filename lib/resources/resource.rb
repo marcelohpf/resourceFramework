@@ -8,4 +8,6 @@ class ResourceModel
   property :product_number, String
   timestamps :created_at, :updated_on
   property :type, Discriminator
+
+	has n, :allocation_models
 end

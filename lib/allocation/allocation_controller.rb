@@ -5,7 +5,6 @@ require_relative '../base/class_type_error'
 
 
 class AllocationBaseApp < Sinatra::Base
-  include ResourcesBase
 	
 	def model
 		AllocationModel

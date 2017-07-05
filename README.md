@@ -62,7 +62,8 @@ Para adicionar constrollers customizadas, ou que implementem novas rotas ao sist
     use MyModelApp
     use RoleBaseApp
     use AllocationBaseApp
-    use UserApp
+    use AdministratorApp
+    use CommonApp
     use PlaceApp
     use ItemApp
     run BaseApp

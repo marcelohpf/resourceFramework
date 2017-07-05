@@ -1,4 +1,4 @@
-require_relative '../lib/resources/resource'
+require_relative '../lib/authentication/user'
 
 class Administrator < UserModel
   property :password, String

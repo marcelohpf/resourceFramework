@@ -1,10 +1,10 @@
 require 'sinatra/base'
 
 require_relative 'administrator'
-require_relative '../lib/authentication/administrator_controller'
+require_relative '../lib/authentication/user_controller'
 
 
-class AdminApp < administratorBaseApp
+class AdministratorApp < UserBaseApp
 
   def model
    Administrator 

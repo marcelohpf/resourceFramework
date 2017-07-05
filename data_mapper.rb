@@ -9,6 +9,8 @@ DataMapper::setup(:default, "sqlite3://#{File.expand_path __dir__}/db.sqlite3")
 
 require_all File.expand_path "#{__dir__}/lib"
 require_all File.expand_path "#{__dir__}/resources"
+require_all File.expand_path "#{__dir__}/users"
+
 
 DataMapper.finalize
 DataMapper.repository.auto_upgrade!

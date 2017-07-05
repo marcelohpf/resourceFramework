@@ -17,6 +17,7 @@ require './data_mapper'
 # reference: https://learn.co/lessons/sinatra-multiple-controllers
 use RoleBaseApp
 use UserBaseApp
+use AllocationBaseApp
 use PlaceApp
 use ItemApp
 run BaseApp

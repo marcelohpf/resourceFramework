@@ -1,11 +1,10 @@
 require 'sinatra/base'
 
 require_relative 'resource'
-require_relative '../lib/resources_base'
+require_relative '../lib/resources/resource_controller'
 
 
-class ItemApp < Sinatra::Base
-  include ResourcesBase
+class ItemApp < ResourceBaseApp
 
   def model
     Item

@@ -1,12 +1,11 @@
 require 'sinatra/base'
 require 'json'
-require_relative 'resource'
 require_relative 'class_type_error'
 
 
 module ResourcesBase
 
-  ## The resource module for Allocation framework
+  ## The resource class for Allocation framework
   # this module is the implementation to basic operations for a rest service
   # that implements a simple CRUD operations
   #
@@ -18,7 +17,7 @@ module ResourcesBase
   # DataMapper::Resource
 
   def model
-
+    raise ClassTypeError
   end
 
 

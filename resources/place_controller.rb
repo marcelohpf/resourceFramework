@@ -2,10 +2,9 @@ require 'sinatra/base'
 require 'json'
 
 require_relative 'resource'
-require_relative '../lib/resources_base'
+require_relative '../lib/resources/resource_controller'
 
-class PlaceApp < Sinatra::Base
-  include ResourcesBase
+class PlaceApp < ResourceBaseApp
 
   def model
     Place

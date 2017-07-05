@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require_relative 'user'
-require_relative 'class_type_error'
-require_relative 'resources_base'
+require_relative '../base/class_type_error'
+require_relative '../base/resources_base'
 
 
 class UserBaseApp < Sinatra::Base

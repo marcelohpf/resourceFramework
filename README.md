@@ -58,9 +58,14 @@ Caso seja desejado extender o framework, adicionando mais models, deve-se adicio
 Para adicionar constrollers customizadas, ou que implementem novas rotas ao sistema, deve-se adiciona-las ao arquivo `app.ru`.
 
     ## app.ru
+    # Adicionando meus modelos
     use MyModelApp
+    use RoleBaseApp
+    use AllocationBaseApp
     use UserApp
-    run ResourceApp
+    use PlaceApp
+    use ItemApp
+    run BaseApp
 
 ### Rotas
 
@@ -85,6 +90,13 @@ As rotas padrão para o sistema são apresentadas na tabela abaixo
 |POST|/api/roles/:id| Edita os dados de um cargo |
 |POST|/api/roles/| Adiciona um novo cargo |
 |DELETE|/api/roles/:id| Deleta um cargo |
+|---|---|---|
+|GET|/api/allocations/:id| Dados de uma alocação |
+|GET|/api/allocations/| Lista de alocações |
+|GET|/api/allocations/user/:id| Listas de alocações de um usuário |
+|GET|/api/allocations/resource/:id| Listas de alocações de um recurso |
+|POST|/api/allocations/| Adiciona uma nova alocação |
+|DELETE|/api/allocations/:id| Deleta uma alocação |
 
 ### Atributos
 
@@ -137,4 +149,3 @@ Segue abaixo o diagrama referente as models do framework.
 Segue abaixo o diagrama referente as controllers do framework.
 
 ![controllers](images/controllers1.png)
-
